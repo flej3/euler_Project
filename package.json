@@ -1,0 +1,26 @@
+{
+  "name": "eulerproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build_all": "tsc -p app/server/tsconfig.json && tsc -p app/view/tsconfig.json && nodemon app/server/build/app.js",
+    "build": "webpack --config app/view/webpack.config.js && tsc -p app/server/tsconfig.json && nodemon app/server/build/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^22.5.5",
+    "express": "^4.21.0",
+    "nodemon": "^3.1.7",
+    "scss": "^0.2.4"
+  },
+  "devDependencies": {
+    "glob": "^11.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.2",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
