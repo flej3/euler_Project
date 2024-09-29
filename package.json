@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build_all": "tsc -p app/server/tsconfig.json && tsc -p app/view/tsconfig.json && nodemon app/server/build/app.js",
-    "build": "webpack --config app/view/webpack.config.js && tsc -p app/server/tsconfig.json && nodemon app/server/build/app.js"
+    "build": "webpack --config app/view/webpack.config.js --watch && tsc -p app/server/tsconfig.json && nodemon app/server/build/app.js"
   },
   "author": "",
   "license": "ISC",

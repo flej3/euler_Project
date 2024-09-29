@@ -6,6 +6,6 @@ for(let i = 0; i < 10; i++) {
 document.addEventListener('DOMContentLoaded',() => {
     const test = document.getElementById('testId');
     if(test){
-        test.innerHTML = '좀 살려줘라';
+        test.innerHTML = 'help 살려';
     }
 });
