@@ -5,7 +5,9 @@
     "rootDir": "./src",   // TypeScript 소스 파일들의 루트 폴더
     "module": "commonjs", // Node.js 환경을 위한 모듈 시스템
     "target": "ES6",      // ECMAScript 6 이상으로 컴파일
-    "strict": true        // 엄격한 타입 검사
+    "strict": true,        // 엄격한 타입 검사
+    "moduleResolution": "node", //모듈 해석 방법 설정: 'node' (Node.js)
+    "esModuleInterop": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

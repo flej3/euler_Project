@@ -1,20 +1,35 @@
-const express = require('express');
-const ejs = require('ejs');
-const path = require('path');
-const dotenv = require('dotenv');
+// app.ts
+import express from 'express';
+import path from 'path';
+import dotenv from 'dotenv';
+import session from 'express-session';
+import passport from 'passport';
+import cors from 'cors';
 
-const app = express();
+import { initializeGitLabOAuth } from './controller/auth.ctrl';
 
 dotenv.config();
 
+const app = express();
+app.use(cors());
+
+// GitLab OAuth 설정 초기화
+initializeGitLabOAuth();
+
+app.use(session({ secret: process.env.SESSION_SECRET!, resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json());
 
 const indexRouter = require('./routes/index.route');
+const loginRouter = require('./routes/login.route');
+const logoutRouter = require('./routes/logout.route');
 
-//라우터 설정
 app.use(indexRouter);
+app.use(loginRouter);
+app.use(logoutRouter);
 
-//정적파일
+app.use('/static', express.static(path.join(__dirname, '../../view/static')));
 app.use('/webPackBuild', express.static(path.join(__dirname, '../../view/webPackBuild')));
 
 app.set('view engine', 'ejs');

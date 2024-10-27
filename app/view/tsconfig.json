@@ -2,11 +2,11 @@
   "extends": "../../tsconfig.base.json", // 선택 사항: 공통 설정 확장
   "compilerOptions": {
     "outDir": "./build", // 빌드된 JS 파일들이 저장될 폴더
-    "rootDir": "./src", // TypeScript 소스 파일들이 있는 폴더
+    "rootDir": "ts", // TypeScript 소스 파일들이 있는 폴더
     "module": "ES6", // ES6 모듈을 사용
     "target": "ES6", // ECMAScript 6 이상으로 컴파일
     "strict": true // 엄격한 타입 검사
   },
-  "include": ["src/**/*.ts"],
+  "include": ["ts/**/*.ts"],
   "exclude": ["node_modules"]
 }
