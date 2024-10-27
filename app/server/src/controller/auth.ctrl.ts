@@ -82,12 +82,12 @@ const setRefreshTokenInCookies = (res: ExpressResponse, token: string) => {
 };
 
 // 쿠키에서 Access Token을 가져오기
-const getAccessTokenFromCookies = (req: Request): string | null => {
+export const getAccessTokenFromCookies = (req: Request): string | null => {
     return req.cookies['accessToken'] || null;
 };
 
 // 쿠키에서 Refresh Token을 가져오기
-const getRefreshTokenFromCookies = (req: Request): string | null => {
+export const getRefreshTokenFromCookies = (req: Request): string | null => {
     return req.cookies['refreshToken'] || null;
 };
 
