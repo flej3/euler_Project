@@ -1,6 +1,5 @@
 import passport from 'passport';
 import OAuth2Strategy from 'passport-oauth2';
-import { Profile } from 'passport';
 import { Request, Response as ExpressResponse, NextFunction } from 'express';
 import { handleGitLabUser } from './userHandler';
 
@@ -22,7 +21,7 @@ export const initializeGitLabOAuth = () => {
         clientSecret: process.env.GITLAB_CLIENT_SECRET!,
         callbackURL: "http://localhost:4000/auth/gitlab/callback",
         scope: ['read_user', 'api', 'read_registry', 'openid']
-    }, async (accessToken: string, refreshToken: string, profile: Profile, done: (error: any, user?: any) => void) => {
+    }, async (accessToken: string, refreshToken: string, profile: passport.Profile, done: (error: any, user?: any) => void) => {
         try {
             const userProfile = await handleGitLabUser(accessToken, refreshToken);
             done(null, userProfile); // 사용자 프로필과 함께 전달
@@ -95,12 +94,11 @@ export const getRefreshTokenFromCookies = (req: Request): string | null => {
 export const ensureAuthenticated = (req: Request, res: ExpressResponse, next: NextFunction) => {
     if (req.isAuthenticated && req.isAuthenticated()) {
         if (req.user?.accessToken) {
-            setAccessTokenInCookies(res, req.user.accessToken); // Access Token을 쿠키에 저장
+            setAccessTokenInCookies(res, req.user.accessToken);
         }
 
-        // Refresh Token을 쿠키에 저장 (선택 사항)
         if (req.user?.refreshToken) {
-            setRefreshTokenInCookies(res, req.user.refreshToken); // Refresh Token을 쿠키에 저장
+            setRefreshTokenInCookies(res, req.user.refreshToken);
         }
 
         return next();
@@ -109,31 +107,15 @@ export const ensureAuthenticated = (req: Request, res: ExpressResponse, next: Ne
     }
 };
 
-// GitLab OAuth 콜백 핸들러
-// export const gitlabOAuthCallback = async (req: Request, res: ExpressResponse) => {
-//     try {
-//         const userProfile = req.user;
-
-//         res.redirect('/');
-//     } catch (error) {
-//         console.error('Error in GitLab OAuth callback:', error);
-//         res.status(500).send('Error in GitLab OAuth callback');
-//     }
-// };
-
 export const logout = (req: Request, res: ExpressResponse) => {
-    // 세션 제거
     req.logout((err) => {
         if (err) {
             console.error('Error logging out:', err);
             return res.status(500).send('Error logging out');
         }
-
-        // 쿠키 제거
         res.clearCookie('accessToken', { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
         res.clearCookie('refreshToken', { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
         res.clearCookie('connect.sid', { path: '/', httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-        // GitLab 로그아웃 URL로 리디렉션하거나 로컬 로그아웃 페이지로 리디렉션
         res.redirect('/');
     });
 };
