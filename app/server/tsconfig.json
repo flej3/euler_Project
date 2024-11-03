@@ -7,7 +7,8 @@
     "target": "ES6",      // ECMAScript 6 이상으로 컴파일
     "strict": true,        // 엄격한 타입 검사
     "moduleResolution": "node", //모듈 해석 방법 설정: 'node' (Node.js)
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

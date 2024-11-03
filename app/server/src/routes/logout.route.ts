@@ -1,9 +1,9 @@
 import express, {Request, Response} from 'express';
-import {logout} from '../controller/auth.ctrl';
 const router = express.Router();
 
-router.get("/logout", logout, (req:Request, res: Response) => {
-    res.render("/");
+router.get("/logout", (req:Request, res: Response) => {
+    res.clearCookie('accessToken');
+    res.redirect("/");
 })
 
 module.exports = router;
